@@ -15,7 +15,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    public ResponseDTO<RegisterUserResponseDTO> registerUser(RegisterUserRequestDTO request){
+    public ResponseDTO<UserResponseDTO> registerUser(RegisterUserRequestDTO request){
         // return saved user object
         User1 user = userService.registerUser(request.getName(),
                 request.getPhoneNumber(),
@@ -27,8 +27,8 @@ public class UserController {
         userDTO.setPhoneNumber(user.getPhoneNumber());
 
         //create ResponseDTO object
-        ResponseDTO<RegisterUserResponseDTO> responseDTO = new ResponseDTO<>();
-        responseDTO.setData(new RegisterUserResponseDTO());
+        ResponseDTO<UserResponseDTO> responseDTO = new ResponseDTO<>();
+        responseDTO.setData(new UserResponseDTO());
         responseDTO.getData().setUser(userDTO);
         responseDTO.setStatus(ResponseStatus.SUCCESS);
 
@@ -40,6 +40,21 @@ public class UserController {
 
         SettleUpResponseDTO responseDTO = new SettleUpResponseDTO();
         responseDTO.setTransactions(transactions);
+        return responseDTO;
+    }
+
+    public ResponseDTO<UserResponseDTO> updateUser(UpdateUserRequestDTO request){
+        User1 user = userService.updateUser(
+                request.getUserId(), request.getName(), request.getPhoneNumber(), request.getPassword());
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setName(user.getName());
+        userDTO.setPhoneNumber(user.getPhoneNumber());
+
+        ResponseDTO<UserResponseDTO> responseDTO = new ResponseDTO<>();
+        responseDTO.setStatus(ResponseStatus.SUCCESS);
+        responseDTO.getData().setUser(userDTO);
+
         return responseDTO;
     }
 }

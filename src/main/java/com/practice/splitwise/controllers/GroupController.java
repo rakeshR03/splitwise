@@ -1,7 +1,7 @@
 package com.practice.splitwise.controllers;
 
-import com.practice.splitwise.dtos.SettleUpGroupRequestDTO;
-import com.practice.splitwise.dtos.SettleUpResponseDTO;
+import com.practice.splitwise.dtos.*;
+import com.practice.splitwise.models.Group;
 import com.practice.splitwise.models.Transaction;
 import com.practice.splitwise.services.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +30,20 @@ public class GroupController {
         3 -> 4 : 200
 
      */
+
+    public ResponseDTO<GroupResponseDTO> registerGroup(RegisterGroupRequestDTO groupRequestDTO){
+        Group group = groupService.registerGroup(
+                groupRequestDTO.getName(), groupRequestDTO.getAdmins(), groupRequestDTO.getMembers());
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setName(group.getName());
+        groupDTO.setAdmins(group.getAdmins());
+        groupDTO.setMembers(group.getMembers());
+
+        ResponseDTO<GroupResponseDTO> responseDTO = new ResponseDTO<>();
+        responseDTO.setStatus(ResponseStatus.SUCCESS);
+        responseDTO.getData().setGroupDTO(groupDTO);
+
+        return responseDTO;
+    }
 }

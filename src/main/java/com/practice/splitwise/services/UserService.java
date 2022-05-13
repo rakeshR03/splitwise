@@ -1,6 +1,7 @@
 package com.practice.splitwise.services;
 
 import com.practice.splitwise.dtos.RegisterUserRequestDTO;
+import com.practice.splitwise.dtos.UserDTO;
 import com.practice.splitwise.models.Expense;
 import com.practice.splitwise.models.Transaction;
 import com.practice.splitwise.models.User1;
@@ -68,6 +69,19 @@ public class UserService {
         }
 
         return filteredTransactions;
+    }
+
+    public User1 updateUser(Long userId, String name, String phoneNumber, String password){
+
+        User1 user = userRepository.getUser1ById(userId).get();
+
+        String hashedPassword = passwordHashingStrategy.hash(password);
+
+        user.setPhoneNumber(phoneNumber);
+        user.setName(name);
+        user.setHashedPassword(hashedPassword);
+        return userRepository.save(user);
+
     }
 }
 

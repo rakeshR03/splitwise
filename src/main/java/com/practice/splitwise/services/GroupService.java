@@ -1,9 +1,6 @@
 package com.practice.splitwise.services;
 
-import com.practice.splitwise.models.Expense;
-import com.practice.splitwise.models.Group;
-import com.practice.splitwise.models.GroupExpense;
-import com.practice.splitwise.models.Transaction;
+import com.practice.splitwise.models.*;
 import com.practice.splitwise.repositories.GroupExpenseRepository;
 import com.practice.splitwise.repositories.GroupRepository;
 import com.practice.splitwise.strategy.settleup.SettleUpExpenseStrategy;
@@ -43,5 +40,15 @@ public class GroupService {
         //    transactions to settle up those expenses.
 
         return strategy.settle(expenses);
+    }
+
+    public Group registerGroup(String name, List<User1> admins, List<User1> members){
+
+        Group group = new Group();
+        group.setName(name);
+        group.setAdmins(admins);
+        group.setMembers(members);
+
+        return groupRepository.save(group);
     }
 }

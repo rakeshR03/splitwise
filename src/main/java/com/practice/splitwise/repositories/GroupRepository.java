@@ -9,5 +9,7 @@ import java.util.Optional;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
 
+    Group save(Group group);
+
     Optional<Group> findById(Long id);
 }
